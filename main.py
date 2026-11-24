@@ -17,10 +17,16 @@ deterministic, to /output/entry.txt (or $MAKEFUN_OUTPUT_DIR/entry.txt).
 
 import os
 
+# The entry line (81 chars, under the 200-char cap): the joke's turn lands
+# on "in my will" — the speaker escalates "per my last email" past death,
+# so the punchline is the escalation itself, not the email phrase alone.
 LINE = "I put 'per my last email' in my will so my family knows I already explained this."
 
 
 def main() -> None:
+    # Self-check: a one-liner entry must stay a single line under the cap;
+    # fail loudly instead of writing an invalid entry.
+    assert 1 <= len(LINE) <= 199 and "\n" not in LINE, "entry line must be 1-199 chars, one line"
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
